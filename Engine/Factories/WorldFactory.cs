@@ -10,7 +10,15 @@ internal class WorldFactory
 {
 
     internal World CreateWorld()
-    {
-        return new World();
+    {   
+        var newWorld = new World();
+
+        newWorld.AddLocation(
+            0,
+            -1,
+            "Home",
+            "This is your home",
+            "pack://application:,,,/Engine;component/Images/Locations/Home.png");
+        return newWorld;
     }
 }

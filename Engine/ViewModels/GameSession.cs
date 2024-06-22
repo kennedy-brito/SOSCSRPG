@@ -22,15 +22,10 @@ public class GameSession
         CurrentPlayer.ExperiencePoints = 0;
         CurrentPlayer.Level = 1;
 
-        CurrentLocation = new Location();
-        CurrentLocation.Name = "Home";
-        CurrentLocation.XCoordinate = 0;
-        CurrentLocation.YCoordinate = -1;
-        CurrentLocation.Description = "This is your home";
-        CurrentLocation.ImageName = "pack://application:,,,/Engine;component/Images/Locations/Home.png";
-
         var factory = new WorldFactory();
-        CurrentWorld = factory.CreateWorld() ;
+        CurrentWorld = factory.CreateWorld();
+
+        CurrentLocation = CurrentWorld.LocationAt(0, -1);
     }
 
 }
