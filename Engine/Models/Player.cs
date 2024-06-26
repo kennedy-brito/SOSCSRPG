@@ -22,7 +22,7 @@ public class Player : INotifyPropertyChanged
         set
         {
             _name = value;
-            OnPropertyChanged("Name");
+            OnPropertyChanged(nameof(Name));
         }
     }
     public string CharacterClass 
@@ -31,7 +31,7 @@ public class Player : INotifyPropertyChanged
         set
         {
             _characterClass = value;
-            OnPropertyChanged("CharacterClass");
+            OnPropertyChanged(nameof(CharacterClass));
         }
     } 
     public int HitPoints 
@@ -40,7 +40,7 @@ public class Player : INotifyPropertyChanged
         set 
         {
             _hitPoints = value;
-            OnPropertyChanged("HitPoints");
+            OnPropertyChanged(nameof(HitPoints));
         }
     }
 
@@ -50,7 +50,7 @@ public class Player : INotifyPropertyChanged
         set
         {
             _experiencePoints = value;
-            OnPropertyChanged("ExperiencePoints");
+            OnPropertyChanged(nameof(ExperiencePoints));
         }
     }
     public int Level
@@ -59,7 +59,7 @@ public class Player : INotifyPropertyChanged
         set
         {
             _level = value;
-            OnPropertyChanged("Level");
+            OnPropertyChanged(nameof(Level));
         }
     }
     public int Gold 
@@ -68,7 +68,7 @@ public class Player : INotifyPropertyChanged
         set 
         { 
             _gold = value;
-            OnPropertyChanged("Gold");
+            OnPropertyChanged(nameof(Gold));
         }
     }
 
