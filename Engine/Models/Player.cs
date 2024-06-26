@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.Factories;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -73,6 +74,15 @@ public class Player : BaseNotificationClass
         }
     }
     
-    public ObservableCollection<GameItem> Inventory { get; set; } = new ();
+    public ObservableCollection<GameItem> Inventory { get; set; }
+
+    public Player()
+    {
+        Inventory = new ObservableCollection<GameItem>();
+
+        Inventory.Add(ItemFactory.CreateGameItem(1001));
+        Inventory.Add(ItemFactory.CreateGameItem(1002));
+        Inventory.Add(ItemFactory.CreateGameItem(1002));
+    }
 
 }
