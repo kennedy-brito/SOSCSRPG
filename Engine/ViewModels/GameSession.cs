@@ -8,7 +8,7 @@ using Engine.Factories;
 using System.ComponentModel;
 namespace Engine.ViewModels;
 
-public class GameSession : INotifyPropertyChanged
+public class GameSession : BaseNotificationClass
 {
     private Location _currentLocation;
     public World CurrentWorld { get; set; }
@@ -57,16 +57,17 @@ public class GameSession : INotifyPropertyChanged
 
     public GameSession()
     {
-        CurrentPlayer = new Player();
-        CurrentPlayer.Name = "Scott";
-        CurrentPlayer.CharacterClass = "Fighter";
-        CurrentPlayer.Gold = 1000;
-        CurrentPlayer.HitPoints = 10;
-        CurrentPlayer.ExperiencePoints = 0;
-        CurrentPlayer.Level = 1;
+        CurrentPlayer = new Player
+            {
+                Name = "Scott",
+                CharacterClass = "Fighter",
+                Gold = 1000,
+                HitPoints = 10,
+                ExperiencePoints = 0,
+                Level = 1
+            };
 
-        var factory = new WorldFactory();
-        CurrentWorld = factory.CreateWorld();
+        CurrentWorld = WorldFactory.CreateWorld();
 
         CurrentLocation = CurrentWorld.LocationAt(0, 0);
     }
@@ -90,9 +91,4 @@ public class GameSession : INotifyPropertyChanged
 
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }
