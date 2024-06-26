@@ -18,11 +18,11 @@ public class GameSession : INotifyPropertyChanged
         set
         {
             _currentLocation = value;
-            OnPropertyChanged("CurrentLocation");
-            OnPropertyChanged("HasLocationToNorth");
-            OnPropertyChanged("HasLocationToSouth");
-            OnPropertyChanged("HasLocationToWest");
-            OnPropertyChanged("HasLocationToEast");
+            OnPropertyChanged(nameof(CurrentLocation));
+            OnPropertyChanged(nameof(HasLocationToNorth));
+            OnPropertyChanged(nameof(HasLocationToSouth));
+            OnPropertyChanged(nameof(HasLocationToWest));
+            OnPropertyChanged(nameof(HasLocationToEast));
         } 
     }
 
