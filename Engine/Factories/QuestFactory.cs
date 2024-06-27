@@ -28,5 +28,5 @@ internal static class QuestFactory
             25, 10, rewardItems));
     }
 
-    internal static Quest? GetQuestById(int id) => _quests.FirstOrDefault(quest => quest.ID == id);
+    internal static Quest GetQuestById(int id) => _quests.FirstOrDefault(quest => quest.ID == id);
 }
