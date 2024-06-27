@@ -75,14 +75,11 @@ public class Player : BaseNotificationClass
     }
     
     public ObservableCollection<GameItem> Inventory { get; set; }
-
+    public ObservableCollection<QuestStatus> Quests { get; set; }
     public Player()
     {
         Inventory = new ObservableCollection<GameItem>();
-
-        Inventory.Add(ItemFactory.CreateGameItem(1001));
-        Inventory.Add(ItemFactory.CreateGameItem(1002));
-        Inventory.Add(ItemFactory.CreateGameItem(1002));
+        Quests = new ObservableCollection<QuestStatus>();
     }
 
 }

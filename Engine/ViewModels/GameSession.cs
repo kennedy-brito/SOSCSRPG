@@ -23,6 +23,8 @@ public class GameSession : BaseNotificationClass
             OnPropertyChanged(nameof(HasLocationToSouth));
             OnPropertyChanged(nameof(HasLocationToWest));
             OnPropertyChanged(nameof(HasLocationToEast));
+
+            GivePlayerQuestsAtLocation();
         } 
     }
 
@@ -107,6 +109,17 @@ public class GameSession : BaseNotificationClass
 
         }
 
+    }
+
+    private void GivePlayerQuestsAtLocation()
+    {
+        foreach(Quest quest in CurrentLocation.QuestsAvailableHere)
+        {
+            if(! CurrentPlayer.Quests.Any(q => q.PlayerQuest.ID == quest.ID))
+            {
+                CurrentPlayer.Quests.Add(new QuestStatus(quest));
+            }
+        }
     }
 
 }
