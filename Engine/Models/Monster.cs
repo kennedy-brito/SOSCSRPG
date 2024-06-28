@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Engine.Models;
 
-internal class Monster : BaseNotificationClass
+public class Monster : BaseNotificationClass
 {
     private int _hitPoints;
     
