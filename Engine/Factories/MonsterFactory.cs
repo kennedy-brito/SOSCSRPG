@@ -30,7 +30,7 @@ public static class MonsterFactory
                 return rat;            
             
             case 3:
-                Monster giantSpider = new Monster("G    iantSpider", "GiantSpider.png", 4, 4, 5, 1);
+                Monster giantSpider = new Monster("GiantSpider", "GiantSpider.png", 4, 4, 5, 1);
 
                 AddLootItem(giantSpider, 9001, 25);
                 AddLootItem(giantSpider, 9002, 75);

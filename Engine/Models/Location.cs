@@ -17,7 +17,7 @@ public class Location
 
     public List<Quest> QuestsAvailableHere { get; set; } = new List<Quest>();
 
-    public List<MonsterEncounter> MonstersHere { get; set; }
+    public List<MonsterEncounter> MonstersHere { get; set; } = new List<MonsterEncounter>();
 
     public void AddMonster(int monsterID, int chanceOfEncountering)
     {

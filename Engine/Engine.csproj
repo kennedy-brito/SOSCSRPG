@@ -32,13 +32,13 @@
     <Resource Include="Images\Locations\TownSquare.png" />
     <Resource Include="Images\Locations\Trader.png" />
     <Resource Include="Images\Monsters\GiantSpider.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Monsters\Rat.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Monsters\Snake.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

@@ -37,7 +37,7 @@ public class Monster : BaseNotificationClass
     {
         HitPoints = hitPoints;
         Name = name;
-        ImageName = $"pack://application:,,,/Engine/Images/Monsters/{imageName}";
+        ImageName = $"pack://application:,,,/Engine;component/Images/Monsters/{imageName}";
         MaximumHitPoints = maximumHitPoints;
         RewardExperiencePoints = rewardExperiencePoints;
         RewardGold = rewardGold;
