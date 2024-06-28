@@ -36,34 +36,18 @@ public class GameSession : BaseNotificationClass
     }
     public Weapon CurrentWeapon { get; set; }
 
-    public bool HasLocationToNorth 
-    { 
-        get
-        {
-            return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1 ) is not null;
-        }
-    }
-    public bool HasLocationToSouth
-    { 
-        get
-        {
-            return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1 ) is not null;
-        }
-    }
-    public bool HasLocationToWest
-    { 
-        get
-        {
-            return CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate) is not null;
-        }
-    }
-    public bool HasLocationToEast
-    { 
-        get
-        {
-            return CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate) is not null;
-        }
-    }
+    public bool HasLocationToNorth  => 
+        CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1 ) is not null;
+        
+    public bool HasLocationToSouth => 
+        CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1 ) is not null;
+        
+    public bool HasLocationToWest => 
+        CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate) is not null;
+        
+    public bool HasLocationToEast => 
+        CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate) is not null;
+        
     public bool HasMonster => _currentMonster is not null;
 
     public Monster CurrentMonster
