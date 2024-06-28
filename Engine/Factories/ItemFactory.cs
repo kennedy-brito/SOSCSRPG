@@ -31,7 +31,12 @@ public static class ItemFactory
 
         if(standardItem is not null)
         {
-            return  standardItem.Clone();
+            if (standardItem is Weapon)
+            {
+                return (standardItem as Weapon).Clone();
+            }
+            
+            return standardItem.Clone();
         }
         return null;
     }

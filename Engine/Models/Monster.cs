@@ -25,6 +25,8 @@ public class Monster : BaseNotificationClass
         }
     }
 
+    public int MinimumDamage { get; set; }
+    public int MaximumDamage { get; set; }
     public int RewardExperiencePoints { get; set; }
     public int RewardGold {  get; set; }
 
@@ -33,15 +35,18 @@ public class Monster : BaseNotificationClass
     public Monster(
         string name, string imageName, 
         int maximumHitPoints, int hitPoints,
+        int minimumDamage, int maximumDamage,
         int rewardExperiencePoints, int rewardGold)
     {
+
         HitPoints = hitPoints;
         Name = name;
         ImageName = $"pack://application:,,,/Engine;component/Images/Monsters/{imageName}";
         MaximumHitPoints = maximumHitPoints;
         RewardExperiencePoints = rewardExperiencePoints;
         RewardGold = rewardGold;
-
+        MinimumDamage = minimumDamage;
+        MaximumDamage = maximumDamage;
         Inventory = new ObservableCollection<ItemQuantity>();
     }
 }
