@@ -93,7 +93,7 @@ public class Player : BaseNotificationClass
     {
         Inventory.Add(item);
 
-        OnPropertyChanged(nameof(Weapon));
+        OnPropertyChanged(nameof(Weapons));
     }
         
     public void RemoveItemFromInventory(GameItem item) 
