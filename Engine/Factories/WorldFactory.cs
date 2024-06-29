@@ -62,7 +62,7 @@ internal static class WorldFactory
             Add(QuestFactory.GetQuestById(1));
 
         newWorld.LocationAt(0, 1).TraderHere =
-            TraderFactory.GetTraderByName("Pete The Herbalist");
+            TraderFactory.GetTraderByName("Pete the Herbalist");
 
 
         newWorld.AddLocation(0, 2, "Herbalist's garden",
