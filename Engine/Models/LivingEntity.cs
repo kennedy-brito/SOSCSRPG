@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 
 namespace Engine.Models;
 public abstract class LivingEntity : BaseNotificationClass
@@ -48,16 +49,33 @@ public abstract class LivingEntity : BaseNotificationClass
         }
     }
     public ObservableCollection<GameItem> Inventory { get; set; }
+    public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; set; }
+    public List<GameItem> Weapons =>
+        Inventory.Where(i => i is Weapon).ToList();
     protected LivingEntity()
     {
         Inventory = new ObservableCollection<GameItem>();
+        GroupedInventory = new ObservableCollection<GroupedInventoryItem>();
     }
-    public List<GameItem> Weapons =>
-        Inventory.Where(i => i is Weapon).ToList();
 
     public void AddItemToInventory(GameItem item)
     {
         Inventory.Add(item);
+        
+        if(item.IsUnique) 
+        {
+            GroupedInventory.Add(new GroupedInventoryItem(item, 1));
+        
+        }
+        else
+        {
+            if (! GroupedInventory.Any(gi => gi.Item.ItemTypeId == item.ItemTypeId)) 
+            {
+                GroupedInventory.Add(new GroupedInventoryItem(item, 0));
+            }
+
+            GroupedInventory.First(gi=> gi.Item.ItemTypeId == item.ItemTypeId).Quantity++;
+        }
         OnPropertyChanged(nameof(Weapons));
 
     }
@@ -65,6 +83,21 @@ public abstract class LivingEntity : BaseNotificationClass
     public void RemoveItemFromInventory(GameItem item) 
     {
         Inventory.Remove(item);
+            
+        GroupedInventoryItem groupedInventoryItemToRemove =
+            GroupedInventory.First(gi => gi.Item == item);
+
+        if(groupedInventoryItemToRemove is not null)
+        {
+            if(groupedInventoryItemToRemove.Quantity == 1)
+            {
+                GroupedInventory.Remove(groupedInventoryItemToRemove);
+            }
+            else
+            {
+                groupedInventoryItemToRemove.Quantity--;
+            }
+        }
         OnPropertyChanged(nameof(Weapons));
     }
 
