@@ -96,8 +96,9 @@ public class GameSession : BaseNotificationClass
             {
                 Name = "Scott",
                 CharacterClass = "Fighter",
-                Gold = 1000,
-                HitPoints = 10,
+                Gold = 10000,
+                CurrentHitPoints = 10,
+                MaximumHitPoints = 10,
                 ExperiencePoints = 0,
                 Level = 1
             };
@@ -201,12 +202,12 @@ public class GameSession : BaseNotificationClass
         }
         else
         {
-            CurrentMonster.HitPoints -= damageToMonster;
+            CurrentMonster.CurrentHitPoints -= damageToMonster;
             RaiseMessage($"You hit the {CurrentMonster.Name} for {damageToMonster} points");
         }
 
         // if monster if killed, collect rewards and loot
-        if (CurrentMonster.HitPoints <= 0) 
+        if (CurrentMonster.CurrentHitPoints <= 0) 
         {
             RaiseMessage("");
             RaiseMessage($"You defeated the {CurrentMonster.Name}!");
@@ -214,14 +215,13 @@ public class GameSession : BaseNotificationClass
             CurrentPlayer.ExperiencePoints += CurrentMonster.RewardExperiencePoints;
             RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
 
-            CurrentPlayer.Gold += CurrentMonster.RewardGold;
-            RaiseMessage($"You receive {CurrentMonster.RewardGold} gold.");
+            CurrentPlayer.Gold += CurrentMonster.Gold;
+            RaiseMessage($"You receive {CurrentMonster.Gold} gold.");
 
-            foreach(ItemQuantity itemQuantity in CurrentMonster.Inventory)
+            foreach(GameItem gameItem in CurrentMonster.Inventory)
             {
-                GameItem item = ItemFactory.CreateGameItem(itemQuantity.ItemID);
-                CurrentPlayer.AddItemToInventory(item);
-                RaiseMessage($"You receive {itemQuantity.Quantity} {item.Name}.");
+                CurrentPlayer.AddItemToInventory(gameItem);
+                RaiseMessage($"You receive one {gameItem.Name}.");
 
             }
 
@@ -239,18 +239,18 @@ public class GameSession : BaseNotificationClass
             }
             else
             {
-                CurrentPlayer.HitPoints -= damageToPlayer;
+                CurrentPlayer.CurrentHitPoints -= damageToPlayer;
                 RaiseMessage($"The {CurrentMonster.Name} hit you for {damageToPlayer} points");
             }
 
             // If player is killed, move them back to their home
-            if (CurrentPlayer.HitPoints <= 0) 
+            if (CurrentPlayer.CurrentHitPoints <= 0) 
             {
                 RaiseMessage("");
                 RaiseMessage($"The {CurrentMonster.Name} killed you;");
 
                 CurrentLocation = CurrentWorld.LocationAt(0, -1); //Player's home
-                CurrentPlayer.HitPoints = CurrentPlayer.Level * 10; //Completely heal the player
+                CurrentPlayer.CurrentHitPoints = CurrentPlayer.Level * 10; //Completely heal the player
             }
         }
     }

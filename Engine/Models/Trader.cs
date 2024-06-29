@@ -6,24 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Engine.Models;
-public class Trader : BaseNotificationClass
+public class Trader : LivingEntity
 {
-
-    public string Name { get; set; }
-    public ObservableCollection<GameItem> Inventory { get; set; } = new();
-
     public Trader(string name)
     {
         Name = name;
     }
 
-    public void AddItemToInventory(GameItem item)
-    {
-        Inventory.Add(item);
-    }
-
-    public void RemoveItemFromInventory(GameItem item) 
-    {  
-        Inventory.Remove(item);
-    }
 }
