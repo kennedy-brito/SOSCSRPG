@@ -8,6 +8,7 @@ public abstract class LivingEntity : BaseNotificationClass
     private int _currentHitPoints;
     private int _maximumHitPoints;
     private int _gold;
+    private int _level;
 
     #region Properties
     public string Name 
@@ -33,7 +34,7 @@ public abstract class LivingEntity : BaseNotificationClass
     public int MaximumHitPoints
     {
         get => _maximumHitPoints;
-        private set
+        protected set
         {
             _maximumHitPoints = value;
             OnPropertyChanged(nameof(MaximumHitPoints));
@@ -49,6 +50,16 @@ public abstract class LivingEntity : BaseNotificationClass
             OnPropertyChanged(nameof(Gold));
         }
     }
+
+    public int Level
+    {
+        get { return _level; }
+        protected set
+        {
+            _level = value;
+            OnPropertyChanged(nameof(Level));
+        }
+    }
     public ObservableCollection<GameItem> Inventory { get; set; }
     public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; set; }
     public List<GameItem> Weapons =>
@@ -59,12 +70,13 @@ public abstract class LivingEntity : BaseNotificationClass
     #endregion
 
     public event EventHandler OnKilled;
-    protected LivingEntity( string name, int maximumHitPoints, int currentHitPoints, int gold)
+    protected LivingEntity( string name, int maximumHitPoints, int currentHitPoints, int gold, int level = 1)
     {
         Name = name;
         MaximumHitPoints = maximumHitPoints;
         CurrentHitPoints = currentHitPoints;
         Gold = gold;
+        Level = level;
 
         Inventory = new ObservableCollection<GameItem>();
         GroupedInventory = new ObservableCollection<GroupedInventoryItem>();

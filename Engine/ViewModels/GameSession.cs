@@ -28,6 +28,7 @@ public class GameSession : BaseNotificationClass
         {
             if (_currentPlayer is not null) 
             {
+                _currentPlayer.OnLeveledUp -= OnCurrentPlayerLeveledUp;
                 _currentPlayer.OnKilled -= OnCurrentPlayerKilled;
             }
 
@@ -35,6 +36,7 @@ public class GameSession : BaseNotificationClass
 
             if(_currentPlayer is not null)
             {
+                _currentPlayer.OnLeveledUp += OnCurrentPlayerLeveledUp;
                 _currentPlayer.OnKilled += OnCurrentPlayerKilled;
             }
         }
@@ -264,7 +266,7 @@ public class GameSession : BaseNotificationClass
         RaiseMessage($"You defeated the {CurrentMonster.Name}!");
 
         RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
-        CurrentPlayer.ExperiencePoints += CurrentMonster.RewardExperiencePoints;
+        CurrentPlayer.AddExperience(CurrentMonster.RewardExperiencePoints);
 
         RaiseMessage($"You receive {CurrentMonster.Gold} gold.");
         CurrentPlayer.ReceiveGold(CurrentMonster.Gold);
@@ -318,6 +320,9 @@ public class GameSession : BaseNotificationClass
                     RaiseMessage($"   {quest.RewardExperiencePoints} experience points");
                     RaiseMessage($"   {quest.RewardGold} gold");
 
+                    CurrentPlayer.ReceiveGold(quest.RewardGold);
+                    CurrentPlayer.AddExperience(quest.RewardExperiencePoints);
+
                     foreach (ItemQuantity itemQuantity in quest.RewardItems)
                     {
                         GameItem rewardItem = ItemFactory.CreateGameItem(itemQuantity.ItemID);
@@ -331,5 +336,10 @@ public class GameSession : BaseNotificationClass
             }
           
         }
+    }
+
+    private void OnCurrentPlayerLeveledUp(object sender, System.EventArgs eventArgs)
+    {
+        RaiseMessage($"You are now level {CurrentPlayer.Level}");
     }
 }
