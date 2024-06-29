@@ -28,13 +28,13 @@ public partial class TraderWindow : Window
 
     private void OnClick_Sell(object sender, RoutedEventArgs e)
     {
-        GameItem item = ((FrameworkElement)sender).DataContext as GameItem;
+        var groupedInventoryItem = ((FrameworkElement)sender).DataContext as GroupedInventoryItem;
 
-        if(item is not null)
+        if(groupedInventoryItem is not null)
         {
-            Session.CurrentPlayer.Gold += item.Price;
-            Session.CurrentTrader.AddItemToInventory(item);
-            Session.CurrentPlayer.RemoveItemFromInventory(item);
+            Session.CurrentPlayer.Gold += groupedInventoryItem.Item.Price;
+            Session.CurrentTrader.AddItemToInventory(groupedInventoryItem.Item);
+            Session.CurrentPlayer.RemoveItemFromInventory(groupedInventoryItem.Item);
         }
     }
 
