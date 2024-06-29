@@ -43,9 +43,12 @@ public class Player : LivingEntity
     public ObservableCollection<QuestStatus> Quests { get; set; }
 
     #endregion
-    //TODO: Inventory is not working
-    public Player() : base()
+    public Player(string name, string characterClass, int experiencePoints,
+                  int maximumHitPoints, int currentHitPoints, int gold) : 
+        base(name, maximumHitPoints, currentHitPoints, gold)
     {
+        CharacterClass = characterClass;
+        ExperiencePoints = experiencePoints;
         Quests = new ObservableCollection<QuestStatus>();
     }
 

@@ -9,10 +9,11 @@ public abstract class LivingEntity : BaseNotificationClass
     private int _maximumHitPoints;
     private int _gold;
 
+    #region Properties
     public string Name 
     { 
         get => _name; 
-        set
+        private set
         {
             _name = value;
             OnPropertyChanged(nameof(Name));
@@ -22,7 +23,7 @@ public abstract class LivingEntity : BaseNotificationClass
     public int CurrentHitPoints
     {
         get => _currentHitPoints;
-        set
+        private set
         {
             _currentHitPoints = value;
             OnPropertyChanged(nameof(CurrentHitPoints));
@@ -32,7 +33,7 @@ public abstract class LivingEntity : BaseNotificationClass
     public int MaximumHitPoints
     {
         get => _maximumHitPoints;
-        set
+        private set
         {
             _maximumHitPoints = value;
             OnPropertyChanged(nameof(MaximumHitPoints));
@@ -42,7 +43,7 @@ public abstract class LivingEntity : BaseNotificationClass
     public int Gold
     {
         get => _gold;
-        set
+        private set
         {
             _gold = value;
             OnPropertyChanged(nameof(Gold));
@@ -52,8 +53,19 @@ public abstract class LivingEntity : BaseNotificationClass
     public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; set; }
     public List<GameItem> Weapons =>
         Inventory.Where(i => i is Weapon).ToList();
-    protected LivingEntity()
+
+    public bool IsDead => CurrentHitPoints <= 0;
+
+    #endregion
+
+    public event EventHandler OnKilled;
+    protected LivingEntity( string name, int maximumHitPoints, int currentHitPoints, int gold)
     {
+        Name = name;
+        MaximumHitPoints = maximumHitPoints;
+        CurrentHitPoints = currentHitPoints;
+        Gold = gold;
+
         Inventory = new ObservableCollection<GameItem>();
         GroupedInventory = new ObservableCollection<GroupedInventoryItem>();
     }
@@ -101,4 +113,45 @@ public abstract class LivingEntity : BaseNotificationClass
         OnPropertyChanged(nameof(Weapons));
     }
 
+    public void TakeDamage(int hitPointDamage)
+    {
+        CurrentHitPoints -= hitPointDamage;
+
+        if (IsDead)
+        {
+            CurrentHitPoints = 0;
+            RaiseOnKilledEvent();
+        }
+
+    }
+
+    public void Heal(int hitPointHeal)
+    {
+        CurrentHitPoints += hitPointHeal;
+
+        if (CurrentHitPoints > MaximumHitPoints)
+        {
+            CurrentHitPoints = MaximumHitPoints;
+        }
+    }
+
+    public void CompletelyHeal() => CurrentHitPoints = MaximumHitPoints;
+
+    public void ReceiveGold(int amountGold) => Gold += amountGold;
+
+    public void SpendGold(int amountGold)
+    {
+        if(amountGold > Gold)
+        {
+            throw new ArgumentException($"{Name} only has {Gold} gold, and cannot spend {amountGold} gold");
+        }
+
+        Gold -= amountGold;
+    }
+
+    #region private functions
+
+    private void RaiseOnKilledEvent() => OnKilled?.Invoke(this, new System.EventArgs());
+
+    #endregion
 }

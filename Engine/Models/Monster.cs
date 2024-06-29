@@ -9,18 +9,15 @@ public class Monster : LivingEntity
     public int RewardExperiencePoints { get; set; }
 
     public Monster(
-        string name, string imageName, 
-        int maximumHitPoints, int hitPoints,
+        string name, string imageName,
+        int maximumHitPoints, int currentHitPoints,
         int minimumDamage, int maximumDamage,
-        int rewardExperiencePoints, int rewardGold)
+        int rewardExperiencePoints, int gold) :
+        base(name, maximumHitPoints, currentHitPoints, gold)
     {
 
-        CurrentHitPoints = hitPoints;
-        Name = name;
         ImageName = $"pack://application:,,,/Engine;component/Images/Monsters/{imageName}";
-        MaximumHitPoints = maximumHitPoints;
         RewardExperiencePoints = rewardExperiencePoints;
-        Gold = rewardGold;
         MinimumDamage = minimumDamage;
         MaximumDamage = maximumDamage;
     }
