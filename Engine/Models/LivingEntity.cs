@@ -9,6 +9,7 @@ public abstract class LivingEntity : BaseNotificationClass
     private int _maximumHitPoints;
     private int _gold;
     private int _level;
+    private GameItem _currentWeapon;
 
     #region Properties
     public string Name 
@@ -60,6 +61,27 @@ public abstract class LivingEntity : BaseNotificationClass
             OnPropertyChanged();
         }
     }
+
+    public GameItem CurrentWeapon
+    {
+        get { return _currentWeapon; }
+        set
+        {
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Action.OnActionPerformed -= RaiseOnActionPerformedEvent;
+            }
+
+            _currentWeapon = value;
+
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Action.OnActionPerformed += RaiseOnActionPerformedEvent;
+            }
+
+            OnPropertyChanged();
+        }
+    }
     public ObservableCollection<GameItem> Inventory { get; }
     public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; }
     public List<GameItem> Weapons =>
@@ -69,6 +91,7 @@ public abstract class LivingEntity : BaseNotificationClass
 
     #endregion
 
+    public event EventHandler<string> OnActionPerformed;
     public event EventHandler OnKilled;
     protected LivingEntity( string name, int maximumHitPoints, int currentHitPoints, int gold, int level = 1)
     {
@@ -81,7 +104,10 @@ public abstract class LivingEntity : BaseNotificationClass
         Inventory = new ObservableCollection<GameItem>();
         GroupedInventory = new ObservableCollection<GroupedInventoryItem>();
     }
-
+    public void UseCurrentWeaponOn(LivingEntity target)
+    {
+        CurrentWeapon.PerformAction(this, target);
+    }
     public void AddItemToInventory(GameItem item)
     {
         Inventory.Add(item);
@@ -165,6 +191,7 @@ public abstract class LivingEntity : BaseNotificationClass
     #region private functions
 
     private void RaiseOnKilledEvent() => OnKilled?.Invoke(this, new System.EventArgs());
-
+    private void RaiseOnActionPerformedEvent(object sender, string result) =>
+        OnActionPerformed?.Invoke(this, result);
     #endregion
 }

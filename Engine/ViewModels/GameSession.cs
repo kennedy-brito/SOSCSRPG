@@ -28,6 +28,7 @@ public class GameSession : BaseNotificationClass
         {
             if (_currentPlayer is not null) 
             {
+                _currentPlayer.OnActionPerformed -= OnCurrentPlayerPerformedAction;
                 _currentPlayer.OnLeveledUp -= OnCurrentPlayerLeveledUp;
                 _currentPlayer.OnKilled -= OnCurrentPlayerKilled;
             }
@@ -36,6 +37,7 @@ public class GameSession : BaseNotificationClass
 
             if(_currentPlayer is not null)
             {
+                _currentPlayer.OnActionPerformed += OnCurrentPlayerPerformedAction;
                 _currentPlayer.OnLeveledUp += OnCurrentPlayerLeveledUp;
                 _currentPlayer.OnKilled += OnCurrentPlayerKilled;
             }
@@ -59,9 +61,6 @@ public class GameSession : BaseNotificationClass
             CurrentTrader = CurrentLocation.TraderHere;
         } 
     }
-
-
-    public GameItem CurrentWeapon { get; set; }
 
     public bool HasLocationToNorth  => 
         CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1 ) is not null;
@@ -196,31 +195,16 @@ public class GameSession : BaseNotificationClass
         }
     }
 
-    private void RaiseMessage(string message)
-    {
-        OnMessageRaised?.Invoke(this, new GameEventMessageArgs(message));
-    }
 
     public void AttackCurrentMonster()
     {
-        if(CurrentWeapon is null)
+        if(CurrentPlayer.CurrentWeapon is null)
         {
             RaiseMessage("You must select a weapon, to attack.");
             return;
         }
 
-        // determine damage to monster
-        int damageToMonster = RandomNumberGenerator.NumberBetween(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage);
-
-        if(damageToMonster is 0) 
-        {
-            RaiseMessage($"You missed the {CurrentMonster.Name}");
-        }
-        else
-        {
-            RaiseMessage($"You hit the {CurrentMonster.Name} for {damageToMonster} points");
-            CurrentMonster.TakeDamage(damageToMonster);
-        }
+        CurrentPlayer.UseCurrentWeaponOn(CurrentMonster);
 
         // if monster if killed, collect rewards and loot
         if (CurrentMonster.IsDead) 
@@ -248,36 +232,6 @@ public class GameSession : BaseNotificationClass
         }
     }
 
-    private void OnCurrentPlayerKilled(object sender, System.EventArgs eventArgs)
-    {
-
-        // If player is killed, move them back to their home
-            RaiseMessage("");
-        RaiseMessage($"You have been killed.");
-
-        CurrentLocation = CurrentWorld.LocationAt(0, -1); //Player's home
-        CurrentPlayer.CompletelyHeal(); //Completely heal the player
-    }
-
-    private void OnCurrentMonsterKilled(object sender, System.EventArgs eventArgs)
-    {
-        
-        RaiseMessage("");
-        RaiseMessage($"You defeated the {CurrentMonster.Name}!");
-
-        RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
-        CurrentPlayer.AddExperience(CurrentMonster.RewardExperiencePoints);
-
-        RaiseMessage($"You receive {CurrentMonster.Gold} gold.");
-        CurrentPlayer.ReceiveGold(CurrentMonster.Gold);
-
-        foreach (GameItem gameItem in CurrentMonster.Inventory)
-        {
-            CurrentPlayer.AddItemToInventory(gameItem);
-            RaiseMessage($"You receive one {gameItem.Name}.");
-
-        }
-    }
     private void CompleteQuestAtLocation()
     {
        foreach(Quest quest in CurrentLocation.QuestsAvailableHere) 
@@ -338,8 +292,46 @@ public class GameSession : BaseNotificationClass
         }
     }
 
+    private void OnCurrentPlayerPerformedAction(object sender, string result)
+    {
+        RaiseMessage(result);
+    }
     private void OnCurrentPlayerLeveledUp(object sender, System.EventArgs eventArgs)
     {
         RaiseMessage($"You are now level {CurrentPlayer.Level}");
+    }
+    private void OnCurrentPlayerKilled(object sender, System.EventArgs eventArgs)
+    {
+
+        // If player is killed, move them back to their home
+            RaiseMessage("");
+        RaiseMessage($"You have been killed.");
+
+        CurrentLocation = CurrentWorld.LocationAt(0, -1); //Player's home
+        CurrentPlayer.CompletelyHeal(); //Completely heal the player
+    }
+
+    private void OnCurrentMonsterKilled(object sender, System.EventArgs eventArgs)
+    {
+        
+        RaiseMessage("");
+        RaiseMessage($"You defeated the {CurrentMonster.Name}!");
+
+        RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
+        CurrentPlayer.AddExperience(CurrentMonster.RewardExperiencePoints);
+
+        RaiseMessage($"You receive {CurrentMonster.Gold} gold.");
+        CurrentPlayer.ReceiveGold(CurrentMonster.Gold);
+
+        foreach (GameItem gameItem in CurrentMonster.Inventory)
+        {
+            CurrentPlayer.AddItemToInventory(gameItem);
+            RaiseMessage($"You receive one {gameItem.Name}.");
+
+        }
+    }
+    private void RaiseMessage(string message)
+    {
+        OnMessageRaised?.Invoke(this, new GameEventMessageArgs(message));
     }
 }
