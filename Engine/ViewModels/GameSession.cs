@@ -253,7 +253,7 @@ public class GameSession : BaseNotificationClass
 
         // If player is killed, move them back to their home
             RaiseMessage("");
-        RaiseMessage($"The {CurrentMonster.Name} killed you;");
+        RaiseMessage($"You have been killed.");
 
         CurrentLocation = CurrentWorld.LocationAt(0, -1); //Player's home
         CurrentPlayer.CompletelyHeal(); //Completely heal the player

@@ -40,7 +40,7 @@ internal static class WorldFactory
         newWorld.LocationAt(-1, 0).TraderHere =
             TraderFactory.GetTraderByName("Susan");
         
-        newWorld.AddLocation(0, 0, "Town square",
+        newWorld.AddLocation(0, 0, "Town Square",
             "You see a fountain here.",
             "TownSquare.png");
         
