@@ -17,13 +17,12 @@ public class World
         string description,
         string imageName)
     {
-        var loc = new Location();
-        loc.XCoordinate = xCoordinate;
-        loc.YCoordinate = yCoordinate;  
-        loc.Name = name;
-        loc.Description = description;
-        loc.ImageName = $"pack://application:,,,/Engine;component/Images/Locations/{imageName}";
-
+        var loc = new Location(xCoordinate,
+            yCoordinate,
+            name,
+            description,
+            $"pack://application:,,,/Engine;component/Images/Locations/{imageName}");
+        
         _locations.Add(loc);
     }
 

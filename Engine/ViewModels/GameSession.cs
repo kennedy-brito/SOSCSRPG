@@ -21,7 +21,7 @@ public class GameSession : BaseNotificationClass
     private Monster _currentMonster;
     private Trader _currentTrader;
 
-    public World CurrentWorld { get; set; }
+    public World CurrentWorld { get; }
     public Player CurrentPlayer { 
         get => _currentPlayer; 
         set
@@ -46,7 +46,7 @@ public class GameSession : BaseNotificationClass
         set
         {
             _currentLocation = value;
-            OnPropertyChanged(nameof(CurrentLocation));
+            OnPropertyChanged();
             OnPropertyChanged(nameof(HasLocationToNorth));
             OnPropertyChanged(nameof(HasLocationToSouth));
             OnPropertyChanged(nameof(HasLocationToWest));
@@ -96,7 +96,7 @@ public class GameSession : BaseNotificationClass
             }
 
             OnPropertyChanged(nameof(HasMonster));
-            OnPropertyChanged(nameof(CurrentMonster));
+            OnPropertyChanged();
         }
     }
 
@@ -106,7 +106,7 @@ public class GameSession : BaseNotificationClass
         {
             _currentTrader = value;
 
-            OnPropertyChanged(nameof(CurrentTrader));
+            OnPropertyChanged();
             OnPropertyChanged(nameof(HasTrader));
         } 
     }
