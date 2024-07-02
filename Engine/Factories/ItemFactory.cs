@@ -16,6 +16,9 @@ public static class ItemFactory
     {
         BuildWeapon(1001, "Pointy Stick", 1, 1, 2);
         BuildWeapon(1002, "Rusty Sword", 5, 1, 3);
+        BuildWeapon(1501, "Snake fang", 0,0, 2);
+        BuildWeapon(1502, "Rat claws", 0, 0, 2);
+        BuildWeapon(1503, "Spider fangs", 0, 0, 1);
 
         BuildMiscellanousItem(9001, "Snake fang", 1);
         BuildMiscellanousItem(9002, "Snakeskin", 2);

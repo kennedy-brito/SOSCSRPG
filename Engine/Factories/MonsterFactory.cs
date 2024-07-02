@@ -14,7 +14,9 @@ public static class MonsterFactory
         switch(monsterID)
         {
             case 1:
-                Monster snake = new Monster("Snake", "Snake.png", 4, 4, 1, 2, 5, 1);
+                Monster snake = new Monster("Snake", "Snake.png", 4, 4, 5, 1);
+
+                snake.CurrentWeapon = ItemFactory.CreateGameItem(1501);
 
                 AddLootItem(snake, 9001, 25);
                 AddLootItem(snake, 9002, 75);
@@ -22,7 +24,9 @@ public static class MonsterFactory
                 return snake;
             
             case 2:
-                Monster rat = new Monster("Rat", "Rat.png", 5, 5, 1,2, 5, 1);
+                Monster rat = new Monster("Rat", "Rat.png", 5, 5, 5, 1);
+
+                rat.CurrentWeapon = ItemFactory.CreateGameItem(1502);
 
                 AddLootItem(rat, 9001, 25);
                 AddLootItem(rat, 9002, 75);
@@ -30,7 +34,9 @@ public static class MonsterFactory
                 return rat;            
             
             case 3:
-                Monster giantSpider = new Monster("GiantSpider", "GiantSpider.png", 10, 10, 1, 2, 4, 1);
+                Monster giantSpider = new Monster("GiantSpider", "GiantSpider.png", 10, 10, 4, 1);
+
+                giantSpider.CurrentWeapon = ItemFactory.CreateGameItem(1503);
 
                 AddLootItem(giantSpider, 9001, 25);
                 AddLootItem(giantSpider, 9002, 75);
