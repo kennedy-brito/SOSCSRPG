@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Engine.Actions;
-public class AttackWithWeapon
+public class AttackWithWeapon : IAction
 {
     private readonly GameItem _weapon;
     private readonly int _maximumDamage;
